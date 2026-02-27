@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * License compliance check – entry point.
+ *
+ * Resolves project root and config path, then runs the checker.
+ * Config is looked up in order: project scripts/, project config/, package default.
+ *
+ * Usage: check-licenses [--path=/path/to/project]
+ */
+$package_root = dirname(__DIR__);
+
+require_once $package_root . '/src/RunLicenseCheck.php';
+
+exit(run_license_check_cli($argv, $package_root));

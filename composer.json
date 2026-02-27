@@ -1,0 +1,49 @@
+{
+  "name": "swolley/license-compliance-checker",
+  "type": "library",
+  "description": "Check Composer and npm dependency licenses against project license",
+  "license": "MIT",
+  "keywords": [
+    "license",
+    "compliance",
+    "composer",
+    "npm",
+    "dependencies",
+    "spdx"
+  ],
+  "homepage": "https://github.com/swolley/license-compliance-checker#readme",
+  "support": {
+    "issues": "https://github.com/swolley/license-compliance-checker/issues",
+    "source": "https://github.com/swolley/license-compliance-checker"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/swolley/license-compliance-checker.git"
+  },
+  "bin": [
+    "bin/check-licenses"
+  ],
+  "require": {
+    "php": "^8.2"
+  },
+  "require-dev": {
+    "pestphp/pest": "^3.0",
+    "phpunit/phpunit": "^11.0"
+  },
+  "scripts": {
+    "test": [
+      "@php vendor/bin/pest"
+    ],
+    "test:coverage": [
+      "@php vendor/bin/pest --coverage"
+    ],
+    "test:coverage:min": [
+      "@php vendor/bin/pest --coverage --min=100"
+    ]
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}
