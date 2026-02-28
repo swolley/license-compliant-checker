@@ -7,7 +7,7 @@ $bin = realpath(__DIR__ . '/../../bin/check-licenses');
 test('bin exits 2 when path is not a directory', function () use ($bin): void {
     $output = [];
     $return = 0;
-    exec('php ' . escapeshellarg($bin) . ' --path=/nonexistent_' . uniqid() . ' 2>&1', $output, $return);
+    exec(PHP_BINARY . ' ' . escapeshellarg($bin) . ' --path=/nonexistent_' . uniqid() . ' 2>&1', $output, $return);
     expect($return)->toBe(2);
     expect(implode("\n", $output))->toContain('not a directory');
 });
@@ -18,7 +18,7 @@ test('bin exits 2 when project has no license and no config in project', functio
     file_put_contents($dir . '/composer.json', '{}');
     $output = [];
     $return = 0;
-    exec('php ' . escapeshellarg($bin) . ' --path=' . escapeshellarg($dir) . ' 2>&1', $output, $return);
+    exec(PHP_BINARY . ' ' . escapeshellarg($bin) . ' --path=' . escapeshellarg($dir) . ' 2>&1', $output, $return);
     expect($return)->toBe(2);
     $out = implode("\n", $output);
     expect($out)->toContain('Could not detect project license');
@@ -50,7 +50,7 @@ test('bin uses getcwd when no --path', function () use ($bin): void {
     chdir($dir);
     $output = [];
     $return = 0;
-    exec('php ' . escapeshellarg($bin) . ' 2>&1', $output, $return);
+    exec(PHP_BINARY . ' ' . escapeshellarg($bin) . ' 2>&1', $output, $return);
     chdir($orig);
     expect($return)->toBe(0);
     expect(implode("\n", $output))->toContain('Licenses: MIT');
