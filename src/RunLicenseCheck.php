@@ -106,6 +106,30 @@ function colorize_check(string $symbol, string $green, string $red, string $rese
 }
 
 /**
+ * Determine if the given stream is a TTY suitable for colored output.
+ *
+ * @param  resource|mixed  $stream
+ */
+function is_tty($stream): bool
+{
+    if (! is_resource($stream)) {
+        return false;
+    }
+
+    $meta = stream_get_meta_data($stream);
+
+    if (isset($meta['stream_type']) && $meta['stream_type'] === 'MEMORY') {
+        return false;
+    }
+
+    if (! function_exists('posix_isatty')) {
+        return false;
+    }
+
+    return posix_isatty($stream);
+}
+
+/**
  * @param  array<int, array{name: string, version: string, licenses: string, allowed: bool}>  $rows
  * @param  resource  $stdout
  */
@@ -344,8 +368,7 @@ function run_license_check(string $project_root, string $config_path, $stdout = 
     $has_errors = false;
 
     $use_color = getenv('NO_COLOR') === false
-        && function_exists('posix_isatty')
-        && posix_isatty($stdout);
+        && is_tty($stdout);
     $green = $use_color ? "\033[32m" : '';
     $red = $use_color ? "\033[31m" : '';
     $reset = $use_color ? "\033[0m" : '';
