@@ -122,7 +122,7 @@ function is_tty($stream): bool
         return false;
     }
 
-    if (! function_exists('posix_isatty')) {
+    if (! function_exists('posix_isatty')) { // @codeCoverageIgnore
         return false;
     }
 

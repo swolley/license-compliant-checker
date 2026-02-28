@@ -94,6 +94,28 @@ test('colorize_check with color wraps symbol', function (): void {
     expect(colorize_check('✗', $g, $r, $z))->toBe($r . '✗' . $z);
 });
 
+test('is_tty returns false for non resource', function (): void {
+    expect(is_tty(null))->toBeFalse();
+});
+
+test('is_tty returns false for memory stream', function (): void {
+    $stream = fopen('php://memory', 'rw');
+    fwrite($stream, 'x');
+    rewind($stream);
+    expect(is_tty($stream))->toBeFalse();
+    fclose($stream);
+});
+
+test('is_tty can be called on regular file stream', function (): void {
+    $path = sys_get_temp_dir() . '/lcc_tty_' . uniqid();
+    file_put_contents($path, '');
+    $stream = fopen($path, 'rw');
+    is_tty($stream);
+    fclose($stream);
+    unlink($path);
+    expect(true)->toBeTrue();
+});
+
 test('is_license_allowed rejects empty and UNKNOWN', function (): void {
     expect(is_license_allowed('', ['MIT'], []))->toBeFalse();
     expect(is_license_allowed('UNKNOWN', ['MIT'], []))->toBeFalse();

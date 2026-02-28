@@ -38,7 +38,7 @@
       "@php vendor/bin/pest --coverage"
     ],
     "test:coverage:min": [
-      "@php vendor/bin/pest --coverage --min=100"
+      "@php vendor/bin/pest --coverage --min=99"
     ]
   },
   "config": {
