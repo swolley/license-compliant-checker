@@ -33,7 +33,7 @@ test('bin exits 0 when project has scripts/license-compliance.php', function () 
     file_put_contents($dir . '/scripts/license-compliance.php', '<?php return ["compatibility"=>["MIT"=>["MIT"]],"license_families"=>[],"groups"=>[]];');
     $output = [];
     $return = 0;
-    exec('php ' . escapeshellarg($bin) . ' --path=' . escapeshellarg($dir) . ' 2>&1', $output, $return);
+    exec(PHP_BINARY . ' ' . escapeshellarg($bin) . ' --path=' . escapeshellarg($dir) . ' 2>&1', $output, $return);
     expect($return)->toBe(0);
     expect(implode("\n", $output))->toContain('Licenses: MIT');
     unlink($dir . '/scripts/license-compliance.php');
